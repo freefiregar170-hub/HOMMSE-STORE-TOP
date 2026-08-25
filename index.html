@@ -2,54 +2,46 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>HOMMSE STORE TOP1</title>
 
-<style>
-*{
-box-sizing:border-box;
-}
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<style>
+*{box-sizing:border-box}
 body{
 margin:0;
 font-family:Arial,Tahoma,sans-serif;
 background:#080d1b;
-color:white;
+color:#fff
 }
-
 header{
 background:#111a30;
 padding:20px;
 text-align:center;
-border-bottom:1px solid #29385b;
+border-bottom:1px solid #29385b
 }
-
 .logo{
 font-size:25px;
 font-weight:bold;
-color:#ffd84d;
+color:#ffd84d
 }
-
 .container{
 max-width:1000px;
 margin:auto;
-padding:20px;
+padding:15px
 }
-
+.box,.section{
+background:#121b32;
+border:1px solid #29385b;
+border-radius:18px;
+padding:20px;
+margin:20px 0
+}
 .login{
 max-width:450px;
-margin:45px auto;
-background:#121b32;
-padding:25px;
-border-radius:20px;
-border:1px solid #29385b;
+margin:45px auto
 }
-
-h1,h2,h3{
-margin-top:0;
-}
-
 input,select{
 width:100%;
 padding:13px;
@@ -57,80 +49,62 @@ margin:7px 0;
 border-radius:10px;
 border:1px solid #34466d;
 background:#0c1427;
-color:white;
+color:white
 }
-
 button{
 padding:12px 18px;
+margin:5px;
 border:0;
 border-radius:10px;
 background:#ffd84d;
 color:#111;
 font-weight:bold;
-cursor:pointer;
-margin:5px;
+cursor:pointer
 }
-
-button.secondary{
+.secondary{
 background:#293858;
-color:white;
+color:white
 }
-
+.hidden{display:none}
+.balance{
+display:inline-block;
+background:#1d2945;
+padding:12px 18px;
+border-radius:12px;
+margin:10px 0
+}
 .menu{
 display:flex;
 flex-wrap:wrap;
-gap:8px;
-margin-bottom:20px;
+gap:5px
 }
-
-.balance{
-background:#1d2945;
-padding:12px;
-border-radius:12px;
-display:inline-block;
-margin:10px 0;
-}
-
-.section{
-background:#121b32;
-padding:20px;
-border-radius:18px;
-border:1px solid #29385b;
-margin-bottom:20px;
-}
-
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-gap:12px;
+grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+gap:12px
 }
-
 .product{
 background:#1a2540;
 padding:17px;
-border-radius:15px;
+border-radius:15px
 }
-
 .price{
 color:#ffd84d;
 font-size:18px;
 font-weight:bold;
-margin:10px 0;
+margin:10px 0
 }
-
-.hidden{
-display:none;
-}
-
 .note{
 color:#aeb9d2;
-font-size:13px;
+font-size:13px
 }
-
-@media(max-width:600px){
-.container{
-padding:12px;
-}
+.error{color:#ff7070}
+.success{color:#65e6a0}
+.order{
+background:#1a2540;
+padding:15px;
+border-radius:12px;
+margin:10px 0
 }
 </style>
 </head>
@@ -145,15 +119,17 @@ padding:12px;
 
 <!-- تسجيل الدخول -->
 
-<div id="loginPage" class="login">
+<div id="loginPage" class="box login">
 
-<h2>تسجيل الدخول</h2>
+<h2>🔐 تسجيل الدخول</h2>
 
-<input type="email" placeholder="جيميل">
+<div id="loginError" class="error"></div>
 
-<input type="password" placeholder="كلمة السر">
+<input id="loginEmail" type="email" placeholder="جيميل">
 
-<input type="text" placeholder="كود الوكيل">
+<input id="loginPassword" type="password" placeholder="كلمة السر">
+
+<input id="loginAgentCode" placeholder="كود الوكيل">
 
 <button onclick="login()">تسجيل الدخول</button>
 
@@ -162,7 +138,7 @@ padding:12px;
 </button>
 
 <p class="note">
-لا يمكن دخول الموقع بدون تسجيل الدخول
+لا يمكن دخول الموقع بدون تسجيل الدخول.
 </p>
 
 </div>
@@ -170,23 +146,27 @@ padding:12px;
 
 <!-- إنشاء حساب -->
 
-<div id="registerPage" class="login hidden">
+<div id="registerPage" class="box login hidden">
 
-<h2>إنشاء حساب</h2>
+<h2>📝 إنشاء حساب</h2>
 
-<input placeholder="الاسم">
+<div id="registerError" class="error"></div>
+<div id="registerSuccess" class="success"></div>
 
-<input type="email" placeholder="جيميل">
+<input id="registerName" placeholder="الاسم">
 
-<input type="password" placeholder="إنشاء كلمة سر">
+<input id="registerEmail" type="email" placeholder="جيميل">
 
-<input placeholder="رقم الهاتف">
+<input id="registerPassword"
+type="password"
+placeholder="كلمة سر - 6 أحرف أو أرقام على الأقل">
 
-<input placeholder="كود جاهز من وكيل">
+<input id="registerPhone" placeholder="رقم الهاتف">
 
-<button onclick="createAccount()">
-إنشاء الحساب
-</button>
+<input id="registerAgentCode"
+placeholder="كود جاهز من وكيل - اختياري">
+
+<button onclick="register()">إنشاء الحساب</button>
 
 <button class="secondary" onclick="showLogin()">
 رجوع
@@ -195,14 +175,16 @@ padding:12px;
 </div>
 
 
-<!-- الموقع -->
+<!-- المتجر -->
 
 <div id="storePage" class="hidden">
 
 <div class="balance">
-💰 الرصيد:
+💰 رصيدك:
 <strong id="balance">0</strong>
 </div>
+
+<div id="userName"></div>
 
 <div class="menu">
 
@@ -244,16 +226,18 @@ padding:12px;
 </button>
 
 
+<!-- العضويات -->
+
 <div id="members">
 
 <h3>👑 العضويات</h3>
 
-<input id="memberID" placeholder="ID اللاعب">
+<input id="memberID" placeholder="اكتب ID اللاعب">
 
-<select>
-<option>اختر السيرفر</option>
-<option>شرق أوسط</option>
-<option>أوروبا</option>
+<select id="memberServer">
+<option value="">اختر السيرفر</option>
+<option value="شرق أوسط">شرق أوسط</option>
+<option value="أوروبا">أوروبا</option>
 </select>
 
 <div class="grid">
@@ -261,55 +245,55 @@ padding:12px;
 <div class="product">
 <h3>عضوية شهرية</h3>
 <div class="price">1600</div>
-<button>شراء</button>
+<button onclick="buyMember(1600,'عضوية شهرية')">شراء</button>
 </div>
 
 <div class="product">
 <h3>عضوية أسبوعية</h3>
 <div class="price">350</div>
-<button>شراء</button>
+<button onclick="buyMember(350,'عضوية أسبوعية')">شراء</button>
 </div>
 
 <div class="product">
 <h3>عضوية أسبوعية دبل</h3>
 <div class="price">650</div>
-<button>شراء</button>
+<button onclick="buyMember(650,'عضوية أسبوعية دبل')">شراء</button>
 </div>
 
 <div class="product">
 <h3>حزمة مستوى 6</h3>
 <div class="price">100</div>
-<button>شراء</button>
+<button onclick="buyMember(100,'حزمة مستوى 6')">شراء</button>
 </div>
 
 <div class="product">
 <h3>حزمة مستوى 10</h3>
 <div class="price">140</div>
-<button>شراء</button>
+<button onclick="buyMember(140,'حزمة مستوى 10')">شراء</button>
 </div>
 
 <div class="product">
 <h3>حزمة مستوى 15</h3>
 <div class="price">140</div>
-<button>شراء</button>
+<button onclick="buyMember(140,'حزمة مستوى 15')">شراء</button>
 </div>
 
 <div class="product">
 <h3>حزمة مستوى 20</h3>
 <div class="price">140</div>
-<button>شراء</button>
+<button onclick="buyMember(140,'حزمة مستوى 20')">شراء</button>
 </div>
 
 <div class="product">
 <h3>حزمة مستوى 25</h3>
 <div class="price">140</div>
-<button>شراء</button>
+<button onclick="buyMember(140,'حزمة مستوى 25')">شراء</button>
 </div>
 
 <div class="product">
 <h3>حزمة مستوى 30</h3>
 <div class="price">160</div>
-<button>شراء</button>
+<button onclick="buyMember(160,'حزمة مستوى 30')">شراء</button>
 </div>
 
 </div>
@@ -322,13 +306,13 @@ padding:12px;
 
 <h3>💎 الجواهر</h3>
 
-<input placeholder="ID اللاعب">
+<input id="gemID" placeholder="اكتب ID اللاعب">
 
-<select>
-<option>اختر السيرفر</option>
-<option>شرق أوسط</option>
-<option>أوروبا</option>
-<option>تركي</option>
+<select id="gemServer">
+<option value="">اختر السيرفر</option>
+<option value="شرق أوسط">شرق أوسط</option>
+<option value="أوروبا">أوروبا</option>
+<option value="تركي">تركي</option>
 </select>
 
 <div class="grid">
@@ -336,31 +320,31 @@ padding:12px;
 <div class="product">
 <h3>100 جوهرة</h3>
 <div class="price">140</div>
-<button>شراء</button>
+<button onclick="buyGem(140,'100 جوهرة')">شراء</button>
 </div>
 
 <div class="product">
 <h3>200 جواهر</h3>
 <div class="price">280</div>
-<button>شراء</button>
+<button onclick="buyGem(280,'200 جواهر')">شراء</button>
 </div>
 
 <div class="product">
 <h3>500 جواهر</h3>
 <div class="price">700</div>
-<button>شراء</button>
+<button onclick="buyGem(700,'500 جواهر')">شراء</button>
 </div>
 
 <div class="product">
 <h3>1060 جواهر</h3>
 <div class="price">1400</div>
-<button>شراء</button>
+<button onclick="buyGem(1400,'1060 جواهر')">شراء</button>
 </div>
 
 <div class="product">
 <h3>2180 جواهر</h3>
 <div class="price">2700</div>
-<button>شراء</button>
+<button onclick="buyGem(2700,'2180 جواهر')">شراء</button>
 </div>
 
 </div>
@@ -375,11 +359,11 @@ padding:12px;
 
 <h2>📱 قسم الأرصدة</h2>
 
-<button onclick="credit('MTN')">
+<button onclick="showCredit('MTN')">
 MTN
 </button>
 
-<button onclick="credit('Syriatel')">
+<button onclick="showCredit('Syriatel')">
 Syriatel
 </button>
 
@@ -394,15 +378,13 @@ Syriatel
 
 <h2>🎁 استبدال كود هدايا</h2>
 
-<input placeholder="اكتب كود الهدايا">
+<input id="giftCode" placeholder="اكتب كود الهدايا">
 
-<button>
+<button onclick="redeemGift()">
 استبدال
 </button>
 
-<p class="note">
-كود صحيح = إضافة الرصيد
-</p>
+<div id="giftResult"></div>
 
 </div>
 
@@ -413,10 +395,8 @@ Syriatel
 
 <h2>📋 طلباتي</h2>
 
-<p class="note">
-ستظهر طلباتك هنا بعد الشراء.
-</p>
-
+<div id="ordersList">
+جاري تحميل الطلبات...
 </div>
 
 </div>
@@ -426,91 +406,724 @@ Syriatel
 
 <script>
 
-function showRegister(){
+/* =========================
+   SUPABASE
+========================= */
 
-document.getElementById("loginPage").classList.add("hidden");
+const SUPABASE_URL =
+"https://ikmodicwhkgpisifmpts.supabase.co";
 
-document.getElementById("registerPage").classList.remove("hidden");
+const SUPABASE_KEY =
+"sb_publishable_pPkaHpPuUzyBgj5bFDhGQQ_Aoh6bDkO";
+
+const db =
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
+
+
+/* =========================
+   LOGIN
+========================= */
+
+async function login(){
+
+const email =
+document.getElementById("loginEmail").value.trim();
+
+const password =
+document.getElementById("loginPassword").value;
+
+const error =
+document.getElementById("loginError");
+
+error.textContent="";
+
+if(!email || !password){
+
+error.textContent="اكتب الجيميل وكلمة السر";
+
+return;
+}
+
+const {error:err} =
+await db.auth.signInWithPassword({
+email:email,
+password:password
+});
+
+if(err){
+
+error.textContent =
+"الجيميل أو كلمة السر غير صحيحة.";
+
+return;
+}
+
+await loadUser();
 
 }
 
-function showLogin(){
 
-document.getElementById("registerPage").classList.add("hidden");
+/* =========================
+   REGISTER
+========================= */
 
-document.getElementById("loginPage").classList.remove("hidden");
+async function register(){
+
+const name =
+document.getElementById("registerName").value.trim();
+
+const email =
+document.getElementById("registerEmail").value.trim();
+
+const password =
+document.getElementById("registerPassword").value;
+
+const phone =
+document.getElementById("registerPhone").value.trim();
+
+const error =
+document.getElementById("registerError");
+
+const success =
+document.getElementById("registerSuccess");
+
+error.textContent="";
+success.textContent="";
+
+if(!name || !email || !password || !phone){
+
+error.textContent="املأ جميع الخانات المطلوبة.";
+
+return;
+}
+
+if(password.length < 6){
+
+error.textContent =
+"كلمة السر يجب أن تكون 6 أحرف أو أرقام على الأقل.";
+
+return;
+}
+
+const {data,error:err} =
+await db.auth.signUp({
+
+email:email,
+password:password,
+
+options:{
+data:{
+name:name,
+phone:phone
+}
+}
+
+});
+
+if(err){
+
+error.textContent=err.message;
+
+return;
+}
+
+success.textContent =
+"تم إنشاء الحساب بنجاح.";
+
+if(data.session){
+
+await loadUser();
+
+}else{
+
+success.textContent =
+"تم إنشاء الحساب. افحص الجيميل إذا كان تأكيد البريد مفعلاً.";
 
 }
 
-function login(){
+}
 
-document.getElementById("loginPage").classList.add("hidden");
 
-document.getElementById("storePage").classList.remove("hidden");
+/* =========================
+   LOAD USER
+========================= */
+
+async function loadUser(){
+
+const {data} =
+await db.auth.getUser();
+
+if(!data.user){
+
+showLogin();
+
+return;
+}
+
+document
+.getElementById("loginPage")
+.classList.add("hidden");
+
+document
+.getElementById("registerPage")
+.classList.add("hidden");
+
+document
+.getElementById("storePage")
+.classList.remove("hidden");
+
+const name =
+data.user.user_metadata?.name ||
+data.user.email;
+
+document.getElementById("userName").textContent =
+"👤 "+name;
+
+await loadBalance();
+
+await loadOrders();
 
 }
 
-function createAccount(){
 
-alert("تم إنشاء الحساب تجريبياً");
+/* =========================
+   BALANCE
+========================= */
+
+async function loadBalance(){
+
+const {data:userData} =
+await db.auth.getUser();
+
+if(!userData.user)return;
+
+const {data,error} =
+await db
+.from("wallets")
+.select("balance")
+.eq("user_id",userData.user.id)
+.single();
+
+if(error){
+
+console.log(error);
+
+return;
+}
+
+document
+.getElementById("balance")
+.textContent =
+Number(data.balance).toLocaleString();
+
+}
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+async function logout(){
+
+await db.auth.signOut();
+
+document
+.getElementById("storePage")
+.classList.add("hidden");
 
 showLogin();
 
 }
 
-function logout(){
 
-document.getElementById("storePage").classList.add("hidden");
+/* =========================
+   NAVIGATION
+========================= */
 
-document.getElementById("loginPage").classList.remove("hidden");
+function showLogin(){
+
+document
+.getElementById("registerPage")
+.classList.add("hidden");
+
+document
+.getElementById("loginPage")
+.classList.remove("hidden");
 
 }
 
-function showSection(section){
+function showRegister(){
 
-let sections=["freefire","credits","gift","orders"];
+document
+.getElementById("loginPage")
+.classList.add("hidden");
 
-sections.forEach(function(x){
+document
+.getElementById("registerPage")
+.classList.remove("hidden");
 
-document.getElementById(x).classList.add("hidden");
+}
+
+function showSection(id){
+
+[
+"freefire",
+"credits",
+"gift",
+"orders"
+].forEach(function(x){
+
+document
+.getElementById(x)
+.classList.add("hidden");
 
 });
 
-document.getElementById(section).classList.remove("hidden");
+document
+.getElementById(id)
+.classList.remove("hidden");
 
 }
 
-function showFF(type){
+function showFF(id){
 
-document.getElementById("members").classList.add("hidden");
+document
+.getElementById("members")
+.classList.add("hidden");
 
-document.getElementById("gems").classList.add("hidden");
+document
+.getElementById("gems")
+.classList.add("hidden");
 
-document.getElementById(type).classList.remove("hidden");
+document
+.getElementById(id)
+.classList.remove("hidden");
 
 }
 
-function credit(type){
 
-document.getElementById("creditBox").innerHTML=`
+/* =========================
+   MEMBER PURCHASE
+========================= */
+
+async function buyMember(price,name){
+
+const playerID =
+document.getElementById("memberID").value.trim();
+
+const server =
+document.getElementById("memberServer").value;
+
+if(!playerID){
+
+alert("لا يمكن اختيار الباقة بدون ID");
+
+return;
+}
+
+if(!server){
+
+alert("اختر السيرفر أولاً");
+
+return;
+}
+
+await createOrder(
+price,
+name,
+playerID,
+server
+);
+
+}
+
+
+/* =========================
+   GEM PURCHASE
+========================= */
+
+async function buyGem(price,name){
+
+const playerID =
+document.getElementById("gemID").value.trim();
+
+const server =
+document.getElementById("gemServer").value;
+
+if(!playerID){
+
+alert("لا يمكن اختيار الباقة بدون ID");
+
+return;
+}
+
+if(!server){
+
+alert("اختر السيرفر أولاً");
+
+return;
+}
+
+await createOrder(
+price,
+name,
+playerID,
+server
+);
+
+}
+
+
+/* =========================
+   CREATE ORDER
+========================= */
+
+async function createOrder(
+price,
+name,
+playerID,
+server
+){
+
+const {data:userData} =
+await db.auth.getUser();
+
+if(!userData.user){
+
+alert("يجب تسجيل الدخول");
+
+return;
+}
+
+
+/*
+هذه النسخة تسجل الطلب.
+الخصم النهائي سنضعه في
+دالة قاعدة بيانات آمنة.
+*/
+
+const {error} =
+await db
+.from("orders")
+.insert({
+
+user_id:userData.user.id,
+
+product_name:name,
+
+amount:price,
+
+player_id:playerID,
+
+server:server,
+
+status:"pending"
+
+});
+
+if(error){
+
+alert(
+"حدث خطأ: "+error.message
+);
+
+return;
+}
+
+alert("تم إرسال الطلب بنجاح.");
+
+await loadOrders();
+
+}
+
+
+/* =========================
+   ORDERS
+========================= */
+
+async function loadOrders(){
+
+const {data:userData} =
+await db.auth.getUser();
+
+if(!userData.user)return;
+
+const {data,error} =
+await db
+.from("orders")
+.select("*")
+.eq(
+"user_id",
+userData.user.id
+)
+.order(
+"created_at",
+{ascending:false}
+);
+
+const box =
+document.getElementById("ordersList");
+
+if(error){
+
+box.textContent =
+"تعذر تحميل الطلبات.";
+
+return;
+}
+
+if(!data || data.length===0){
+
+box.textContent =
+"لا توجد طلبات.";
+
+return;
+}
+
+box.innerHTML =
+data.map(function(order){
+
+return `
+
+<div class="order">
+
+<b>طلب #${order.id}</b>
+
+<br>
+
+المنتج:
+${order.product_name || "-"}
+
+<br>
+
+السعر:
+${order.amount}
+
+<br>
+
+ID:
+${order.player_id || "-"}
+
+<br>
+
+السيرفر:
+${order.server || "-"}
+
+<br>
+
+الحالة:
+${order.status}
+
+</div>
+
+`;
+
+}).join("");
+
+}
+
+
+/* =========================
+   MTN / SYRIATEL
+========================= */
+
+function showCredit(type){
+
+let rate =
+type==="MTN" ? 12 : 11;
+
+document
+.getElementById("creditBox")
+.innerHTML=`
 
 <h3>رصيد ${type}</h3>
 
-<input placeholder="رقم الهاتف">
+<input
+id="creditPhone"
+placeholder="رقم الهاتف">
 
-<input placeholder="تأكيد رقم الهاتف">
+<input
+id="creditPhoneConfirm"
+placeholder="تأكيد رقم الهاتف">
 
-<input type="number" placeholder="اكتب الكمية">
+<input
+id="creditQuantity"
+type="number"
+min="10"
+placeholder="اكتب الكمية">
 
 <p class="note">
-السعر يتم تحديده تلقائياً
+كل 10 = ${rate}
 </p>
 
-<button>إرسال الطلب</button>
+<button
+onclick="sendCreditOrder('${type}',${rate})">
+
+إرسال الطلب
+
+</button>
 
 `;
 
 }
+
+
+async function sendCreditOrder(type,rate){
+
+const phone =
+document
+.getElementById("creditPhone")
+.value.trim();
+
+const confirmPhone =
+document
+.getElementById("creditPhoneConfirm")
+.value.trim();
+
+const quantity =
+Number(
+document
+.getElementById("creditQuantity")
+.value
+);
+
+if(!phone || !confirmPhone){
+
+alert("اكتب رقم الهاتف وتأكيد الرقم");
+
+return;
+}
+
+if(phone !== confirmPhone){
+
+alert("رقم الهاتف غير متطابق");
+
+return;
+}
+
+if(!quantity || quantity <= 0){
+
+alert("اكتب كمية صحيحة");
+
+return;
+}
+
+const price =
+(quantity / 10) * rate;
+
+await createCreditOrder(
+type,
+phone,
+quantity,
+price
+);
+
+}
+
+
+async function createCreditOrder(
+type,
+phone,
+quantity,
+price
+){
+
+const {data:userData} =
+await db.auth.getUser();
+
+if(!userData.user){
+
+alert("يجب تسجيل الدخول");
+
+return;
+}
+
+const {error} =
+await db
+.from("orders")
+.insert({
+
+user_id:userData.user.id,
+
+product_name:
+"رصيد "+type,
+
+amount:price,
+
+phone:phone,
+
+quantity:quantity,
+
+status:"pending"
+
+});
+
+if(error){
+
+alert(error.message);
+
+return;
+}
+
+alert("تم إرسال طلب الرصيد.");
+
+await loadOrders();
+
+}
+
+
+/* =========================
+   GIFT CODE
+========================= */
+
+async function redeemGift(){
+
+const code =
+document
+.getElementById("giftCode")
+.value.trim();
+
+const result =
+document
+.getElementById("giftResult");
+
+if(!code){
+
+result.textContent =
+"اكتب كود الهدايا.";
+
+return;
+}
+
+
+/*
+سيتم ربط الاستبدال الآمن
+في قاعدة البيانات.
+*/
+
+result.textContent =
+"نظام استبدال الأكواد سيتم تفعيله مع لوحة الإدارة.";
+
+}
+
+
+/* =========================
+   SESSION
+========================= */
+
+db.auth.getSession()
+.then(async function(result){
+
+if(result.data.session){
+
+await loadUser();
+
+}
+
+});
 
 </script>
 
