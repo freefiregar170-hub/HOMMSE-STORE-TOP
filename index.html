@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>HOMMSE STORE TOP1</title>
+
+<style>
+*{
+box-sizing:border-box;
+}
+
+body{
+margin:0;
+font-family:Arial,Tahoma,sans-serif;
+background:#080d1b;
+color:white;
+}
+
+header{
+background:#111a30;
+padding:20px;
+text-align:center;
+border-bottom:1px solid #29385b;
+}
+
+.logo{
+font-size:25px;
+font-weight:bold;
+color:#ffd84d;
+}
+
+.container{
+max-width:1000px;
+margin:auto;
+padding:20px;
+}
+
+.login{
+max-width:450px;
+margin:45px auto;
+background:#121b32;
+padding:25px;
+border-radius:20px;
+border:1px solid #29385b;
+}
+
+h1,h2,h3{
+margin-top:0;
+}
+
+input,select{
+width:100%;
+padding:13px;
+margin:7px 0;
+border-radius:10px;
+border:1px solid #34466d;
+background:#0c1427;
+color:white;
+}
+
+button{
+padding:12px 18px;
+border:0;
+border-radius:10px;
+background:#ffd84d;
+color:#111;
+font-weight:bold;
+cursor:pointer;
+margin:5px;
+}
+
+button.secondary{
+background:#293858;
+color:white;
+}
+
+.menu{
+display:flex;
+flex-wrap:wrap;
+gap:8px;
+margin-bottom:20px;
+}
+
+.balance{
+background:#1d2945;
+padding:12px;
+border-radius:12px;
+display:inline-block;
+margin:10px 0;
+}
+
+.section{
+background:#121b32;
+padding:20px;
+border-radius:18px;
+border:1px solid #29385b;
+margin-bottom:20px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:12px;
+}
+
+.product{
+background:#1a2540;
+padding:17px;
+border-radius:15px;
+}
+
+.price{
+color:#ffd84d;
+font-size:18px;
+font-weight:bold;
+margin:10px 0;
+}
+
+.hidden{
+display:none;
+}
+
+.note{
+color:#aeb9d2;
+font-size:13px;
+}
+
+@media(max-width:600px){
+.container{
+padding:12px;
+}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">HOMMSE STORE TOP1</div>
+</header>
+
+<div class="container">
+
+<!-- تسجيل الدخول -->
+
+<div id="loginPage" class="login">
+
+<h2>تسجيل الدخول</h2>
+
+<input type="email" placeholder="جيميل">
+
+<input type="password" placeholder="كلمة السر">
+
+<input type="text" placeholder="كود الوكيل">
+
+<button onclick="login()">تسجيل الدخول</button>
+
+<button class="secondary" onclick="showRegister()">
+إنشاء حساب
+</button>
+
+<p class="note">
+لا يمكن دخول الموقع بدون تسجيل الدخول
+</p>
+
+</div>
+
+
+<!-- إنشاء حساب -->
+
+<div id="registerPage" class="login hidden">
+
+<h2>إنشاء حساب</h2>
+
+<input placeholder="الاسم">
+
+<input type="email" placeholder="جيميل">
+
+<input type="password" placeholder="إنشاء كلمة سر">
+
+<input placeholder="رقم الهاتف">
+
+<input placeholder="كود جاهز من وكيل">
+
+<button onclick="createAccount()">
+إنشاء الحساب
+</button>
+
+<button class="secondary" onclick="showLogin()">
+رجوع
+</button>
+
+</div>
+
+
+<!-- الموقع -->
+
+<div id="storePage" class="hidden">
+
+<div class="balance">
+💰 الرصيد:
+<strong id="balance">0</strong>
+</div>
+
+<div class="menu">
+
+<button onclick="showSection('freefire')">
+🔥 Free Fire
+</button>
+
+<button onclick="showSection('credits')">
+📱 أرصدة
+</button>
+
+<button onclick="showSection('gift')">
+🎁 كود هدايا
+</button>
+
+<button onclick="showSection('orders')">
+📋 طلباتي
+</button>
+
+<button class="secondary" onclick="logout()">
+خروج
+</button>
+
+</div>
+
+
+<!-- FREE FIRE -->
+
+<div id="freefire" class="section">
+
+<h2>🔥 قسم Free Fire</h2>
+
+<button onclick="showFF('members')">
+👑 العضويات
+</button>
+
+<button onclick="showFF('gems')">
+💎 الجواهر
+</button>
+
+
+<div id="members">
+
+<h3>👑 العضويات</h3>
+
+<input id="memberID" placeholder="ID اللاعب">
+
+<select>
+<option>اختر السيرفر</option>
+<option>شرق أوسط</option>
+<option>أوروبا</option>
+</select>
+
+<div class="grid">
+
+<div class="product">
+<h3>عضوية شهرية</h3>
+<div class="price">1600</div>
+<button>شراء</button>
+</div>
+
+<div class="product">
+<h3>عضوية أسبوعية</h3>
+<div class="price">350</div>
+<button>شراء</button>
+</div>
+
+<div class="product">
+<h3>عضوية أسبوعية دبل</h3>
+<div class="price">650</div>
+<button>شراء</button>
+</div>
+
+<div class="product">
+<h3>حزمة مستوى 6</h3>
+<div class="price">100</div>
+<button>شراء</button>
+</div>
+
+<div class="product">
+<h3>حزمة مستوى 10</h3>
+<div class="price">140</div>
+<button>شراء</button>
+</div>
+
+<div class="product">
+<h3>حزمة مستوى 15</h3>
+<div class="price">140</div>
+<button>شراء</button>
+</div>
+
+<div class="product">
+<h3>حزمة مستوى 20</h3>
+<div class="price">140</div>
+<button>شراء</button>
+</div>
+
+<div class="product">
+<h3>حزمة مستوى 25</h3>
+<div class="price">140</div>
+<button>شراء</button>
+</div>
+
+<div class="product">
+<h3>حزمة مستوى 30</h3>
+<div class="price">160</div>
+<button>شراء</button>
+</div>
+
+</div>
+</div>
+
+
+<!-- الجواهر -->
+
+<div id="gems" class="hidden">
+
+<h3>💎 الجواهر</h3>
+
+<input placeholder="ID اللاعب">
+
+<select>
+<option>اختر السيرفر</option>
+<option>شرق أوسط</option>
+<option>أوروبا</option>
+<option>تركي</option>
+</select>
+
+<div class="grid">
+
+<div class="product">
+<h3>100 جوهرة</h3>
+<div class="price">140</div>
+<button>شراء</button>
+</div>
+
+<div class="product">
+<h3>200 جواهر</h3>
+<div class="price">280</div>
+<button>شراء</button>
+</div>
+
+<div class="product">
+<h3>500 جواهر</h3>
+<div class="price">700</div>
+<button>شراء</button>
+</div>
+
+<div class="product">
+<h3>1060 جواهر</h3>
+<div class="price">1400</div>
+<button>شراء</button>
+</div>
+
+<div class="product">
+<h3>2180 جواهر</h3>
+<div class="price">2700</div>
+<button>شراء</button>
+</div>
+
+</div>
+</div>
+
+</div>
+
+
+<!-- الأرصدة -->
+
+<div id="credits" class="section hidden">
+
+<h2>📱 قسم الأرصدة</h2>
+
+<button onclick="credit('MTN')">
+MTN
+</button>
+
+<button onclick="credit('Syriatel')">
+Syriatel
+</button>
+
+<div id="creditBox"></div>
+
+</div>
+
+
+<!-- كود الهدايا -->
+
+<div id="gift" class="section hidden">
+
+<h2>🎁 استبدال كود هدايا</h2>
+
+<input placeholder="اكتب كود الهدايا">
+
+<button>
+استبدال
+</button>
+
+<p class="note">
+كود صحيح = إضافة الرصيد
+</p>
+
+</div>
+
+
+<!-- الطلبات -->
+
+<div id="orders" class="section hidden">
+
+<h2>📋 طلباتي</h2>
+
+<p class="note">
+ستظهر طلباتك هنا بعد الشراء.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+function showRegister(){
+
+document.getElementById("loginPage").classList.add("hidden");
+
+document.getElementById("registerPage").classList.remove("hidden");
+
+}
+
+function showLogin(){
+
+document.getElementById("registerPage").classList.add("hidden");
+
+document.getElementById("loginPage").classList.remove("hidden");
+
+}
+
+function login(){
+
+document.getElementById("loginPage").classList.add("hidden");
+
+document.getElementById("storePage").classList.remove("hidden");
+
+}
+
+function createAccount(){
+
+alert("تم إنشاء الحساب تجريبياً");
+
+showLogin();
+
+}
+
+function logout(){
+
+document.getElementById("storePage").classList.add("hidden");
+
+document.getElementById("loginPage").classList.remove("hidden");
+
+}
+
+function showSection(section){
+
+let sections=["freefire","credits","gift","orders"];
+
+sections.forEach(function(x){
+
+document.getElementById(x).classList.add("hidden");
+
+});
+
+document.getElementById(section).classList.remove("hidden");
+
+}
+
+function showFF(type){
+
+document.getElementById("members").classList.add("hidden");
+
+document.getElementById("gems").classList.add("hidden");
+
+document.getElementById(type).classList.remove("hidden");
+
+}
+
+function credit(type){
+
+document.getElementById("creditBox").innerHTML=`
+
+<h3>رصيد ${type}</h3>
+
+<input placeholder="رقم الهاتف">
+
+<input placeholder="تأكيد رقم الهاتف">
+
+<input type="number" placeholder="اكتب الكمية">
+
+<p class="note">
+السعر يتم تحديده تلقائياً
+</p>
+
+<button>إرسال الطلب</button>
+
+`;
+
+}
+
+</script>
+
+</body>
+  </html>
