@@ -1,151 +1,294 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>HOMMSE STORE TOP1</title>
+
 <style>
-*{box-sizing:border-box}body{margin:0;background:#080b11;color:#fff;font-family:Arial,Tahoma,sans-serif}
-.app{max-width:520px;margin:auto;min-height:100vh;background:#0d121b}.hidden{display:none!important}
-header{padding:20px;text-align:center;border-bottom:1px solid #263140;position:sticky;top:0;background:#0d121b;z-index:3}
-header h1{margin:0;color:#ff6500;font-size:24px}main{padding:16px}.card{background:#111923;border:1px solid #283547;border-radius:17px;padding:16px;margin-bottom:14px}
-h2{margin:0 0 14px}.logo{width:70px;height:70px;margin:auto;background:#ff5b00;border-radius:20px;display:grid;place-items:center;font-size:25px;font-weight:900}
-label{display:block;margin:11px 0 6px;color:#b9c2cf;font-size:13px}
-input,select{width:100%;padding:13px;border-radius:11px;border:1px solid #2d3a4b;background:#090f17;color:#fff}
-button{cursor:pointer}.buy{width:100%;border:0;border-radius:11px;padding:14px;margin-top:12px;background:#ff5b00;color:#fff;font-weight:bold}
-.tabs,.subtabs,.products{display:grid;gap:8px}.tabs{grid-template-columns:repeat(3,1fr);margin-bottom:14px}
-.subtabs{grid-template-columns:1fr 1fr}.products{grid-template-columns:1fr 1fr}
-.tab,.product{background:#111923;color:#fff;border:1px solid #2b3849;border-radius:11px;padding:12px}
-.active,.selected{background:#ff5b00!important;border-color:#ff5b00!important}.product{text-align:right}
-.product b{display:block;margin-bottom:6px}.product span{color:#ff9a55;font-weight:bold}
-.msg{display:none;padding:10px;border-radius:10px;margin-top:10px;font-size:13px}
-.error{display:block;background:#35161b;color:#ffabb2}.success{display:block;background:#12351f;color:#a4f1bb}
-.notice{font-size:12px;color:#8f9baa;line-height:1.7}.admin-box{border-top:1px solid #283547;margin-top:18px;padding-top:16px}
+*{box-sizing:border-box}
+body{
+margin:0;
+font-family:Arial,Tahoma,sans-serif;
+background:#f3f4f6;
+color:#111827
+}
+header{
+background:#111827;
+color:white;
+text-align:center;
+padding:22px 15px
+}
+header h1{margin:0;font-size:24px}
+header p{margin:8px 0 0;color:#d1d5db}
+main{max-width:900px;margin:auto;padding:15px}
+.card{
+background:white;
+border-radius:16px;
+padding:16px;
+margin-bottom:15px;
+box-shadow:0 3px 15px #0000000d
+}
+.balance{
+display:flex;
+justify-content:space-between;
+align-items:center
+}
+.balance strong{font-size:22px}
+.tabs{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+margin-bottom:15px
+}
+.tab{
+border:0;
+border-radius:12px;
+padding:14px;
+font-size:16px;
+font-weight:bold;
+background:#e5e7eb;
+cursor:pointer
+}
+.tab.active{background:#111827;color:white}
+.section{display:none}
+.section.active{display:block}
+.products{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:10px
+}
+.product{
+border:1px solid #e5e7eb;
+border-radius:13px;
+padding:14px
+}
+.product h3{
+margin:0 0 10px;
+font-size:15px
+}
+.price{
+font-size:17px;
+font-weight:bold;
+margin-bottom:10px
+}
+.buy{
+width:100%;
+border:0;
+border-radius:10px;
+padding:11px;
+background:#16a34a;
+color:white;
+font-weight:bold;
+font-size:14px;
+cursor:pointer
+}
+label{
+display:block;
+font-weight:bold;
+margin:10px 0 6px
+}
+input{
+width:100%;
+padding:12px;
+border:1px solid #d1d5db;
+border-radius:10px;
+font-size:15px
+}
+.note{
+font-size:13px;
+color:#6b7280;
+margin-top:8px
+}
+footer{
+text-align:center;
+padding:20px;
+color:#6b7280;
+font-size:13px
+}
+@media(max-width:600px){
+.products{grid-template-columns:1fr}
+}
 </style>
 </head>
+
 <body>
 
-<div id="login" class="app">
-<header><h1>HOMMSE STORE TOP1</h1></header>
-<main><div class="card">
-<div class="logo">HS</div><h2 style="text-align:center;margin-top:15px">تسجيل الدخول</h2>
-<label>البريد الإلكتروني</label><input id="userEmail" type="email" placeholder="example@gmail.com">
-<label>كلمة المرور</label><input id="userPass" type="password">
-<button class="buy" onclick="userLogin()">تسجيل الدخول</button><div id="loginMsg" class="msg"></div>
-</div></main></div>
+<header>
+<h1>HOMMSE STORE TOP1</h1>
+<p>متجر شحن الألعاب والأرصدة</p>
+</header>
 
-<div id="store" class="app hidden">
-<header><h1>HOMMSE STORE TOP1</h1><div class="notice">متجر شحن فري فاير</div></header>
 <main>
-<div class="card" style="display:flex;justify-content:space-between"><span>الرصيد</span><b id="balance">0</b></div>
+
+<div class="card balance">
+<div>
+<div>رصيدك</div>
+<strong id="balance">0</strong>
+</div>
+<div>ل.س</div>
+</div>
+
 <div class="tabs">
-<button class="tab active" onclick="section('gift',this)">استبدال كود</button>
-<button class="tab" onclick="section('ff',this)">فري فاير</button>
-<button class="tab" onclick="section('bal',this)">الأرصدة</button>
+<button class="tab active" id="ffTab" onclick="showGame('freefire')">
+🔥 Free Fire
+</button>
+
+<button class="tab" id="pubgTab" onclick="showGame('pubg')">
+🎮 PUBG
+</button>
 </div>
 
-<section id="gift" class="card">
-<h2>🎁 استبدال كود هدايا</h2>
-<label>اكتب كود</label><input id="giftCode" placeholder="كود الهدايا">
-<button class="buy" onclick="redeemGift()">استبدال</button><div id="giftMsg" class="msg"></div>
+<div class="card">
 
-<!-- دخول الإدارة مخفي داخل هذه العملية؛ لا توجد صفحة Admin عامة -->
-<div id="adminGate" class="admin-box hidden">
-<h2>🔐 دخول لوحة التحكم</h2>
-<label>كلمة مرور الإدارة</label><input id="adminPass" type="password" autocomplete="current-password">
-<button class="buy" onclick="adminLogin()">دخول لوحة التحكم</button><div id="adminMsg" class="msg"></div>
+<h2>بيانات اللاعب</h2>
+
+<label for="playerId">معرف اللاعب</label>
+<input id="playerId" type="text" placeholder="أدخل ID اللاعب">
+
+<label for="server">السيرفر</label>
+<input id="server" type="text" placeholder="أدخل السيرفر">
+
+<div class="note">
+أدخل بيانات اللاعب قبل الشراء.
+</div>
+
+</div>
+
+<section id="freefire" class="section active">
+<div class="card">
+<h2>🔥 منتجات فري فاير</h2>
+<div id="freefireProducts" class="products"></div>
 </div>
 </section>
 
-<section id="ff" class="hidden">
-<div class="subtabs">
-<button class="tab active" onclick="ff('members',this)">العضويات</button>
-<button class="tab" onclick="ff('diamonds',this)">الجواهر</button></div>
-<div id="members" class="card"><h2>👑 العضويات</h2>
-<label>معرف اللاعب *</label><input id="mid"><label>السيرفر *</label><select id="ms"><option value="">اختر</option><option>شرق أوسط</option><option>أوروبا</option></select>
-<div id="mp" class="products"></div><button id="mb" class="buy" disabled>شراء</button></div>
-<div id="diamonds" class="card hidden"><h2>💎 الجواهر</h2>
-<label>معرف اللاعب *</label><input id="did"><label>السيرفر *</label><select id="ds"><option value="">اختر</option><option>شرق أوسط</option><option>أوروبا</option><option>تركيا</option></select>
-<div id="dp" class="products"></div><button id="db" class="buy" disabled>شراء</button></div>
+<section id="pubg" class="section">
+<div class="card">
+<h2>🎮 منتجات PUBG</h2>
+<div id="pubgProducts" class="products"></div>
+</div>
 </section>
 
-<section id="bal" class="card hidden"><h2>💳 الأرصدة</h2>
-<div class="subtabs"><button class="tab active" onclick="balTab('mtn',this)">MTN</button><button class="tab" onclick="balTab('syria',this)">Syriatel</button></div>
-<div id="mtn"><label>رقم الهاتف</label><input id="mpn"><label>تأكيد الرقم</label><input id="mpc"><label>الكمية</label><input id="mqa" type="number" min="10" step="10"><p class="notice">كل 10 = 12</p><button class="buy" onclick="balanceOrder(12)">شراء</button></div>
-<div id="syria" class="hidden"><label>رقم الهاتف</label><input id="spn"><label>تأكيد الرقم</label><input id="spc"><label>الكمية</label><input id="sqa" type="number" min="10" step="10"><p class="notice">كل 10 = 11</p><button class="buy" onclick="balanceOrder(11)">شراء</button></div>
-<div id="balMsg" class="msg"></div></section>
-</main></div>
+</main>
 
-<div id="admin" class="app hidden">
-<header><h1>HOMMSE STORE TOP1</h1><div class="notice">لوحة تحكم الإدارة</div></header>
-<main><div class="card"><h2>🛠️ لوحة التحكم</h2>
-<p class="notice">تم الدخول بواسطة Supabase Auth. أضف لاحقًا صفحات الطلبات والأكواد والأسعار بصلاحيات قاعدة البيانات.</p>
-<div class="products">
-<button class="tab" onclick="alert('هنا ستظهر الطلبات')">📦 الطلبات</button>
-<button class="tab" onclick="alert('هنا صنع أكواد الهدايا')">🎁 صنع الأكواد</button>
-<button class="tab" onclick="alert('هنا أكواد الوكلاء')">👤 أكواد الوكلاء</button>
-<button class="tab" onclick="alert('هنا تعديل الأسعار')">💰 تعديل الأسعار</button>
-</div>
-<button class="buy" onclick="adminLogout()">تسجيل الخروج</button></div></main></div>
+<footer>
+© 2026 HOMMSE STORE TOP1
+</footer>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const SUPABASE_URL="https://rndscbzzujbmaprofuhy.supabase.co";
-const SUPABASE_KEY="sb_publishable_SBaw1KlxqwGE4_QGzm1jXA_wkWUuMdK";
-const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
-/* هذا الرمز بوابة واجهة فقط. الحماية الحقيقية هي Supabase Auth + RLS. */
-const ADMIN_ACCESS_CODE="freefiregar170@gmail.com+HOMMSE";
-/* لا نضع كلمة مرور الإدارة هنا. أنشئ مستخدم Admin في Supabase Auth. */
+const products = {
 
-function msg(id,text,type){let e=document.getElementById(id);e.textContent=text;e.className="msg "+type}
-async function userLogin(){
- const email=userEmail.value.trim(),pass=userPass.value;
- if(!email||!pass)return msg("loginMsg","أدخل البريد وكلمة المرور","error");
- const {error}=await sb.auth.signInWithPassword({email,password:pass});
- if(error)return msg("loginMsg","بيانات الدخول غير صحيحة","error");
- showStore();
+freefire:[
+["100 جوهرة",140],
+["200 جواهر",280],
+["500 جواهر",700],
+["1060 جواهر",1400],
+["2180 جواهر",2700],
+["عضوية أسبوعية",350],
+["عضوية أسبوعية دبل",650],
+["عضوية شهرية",1600],
+["حزمة مستوى 6",100],
+["حزمة مستوى 10",140],
+["حزمة مستوى 15",140],
+["حزمة مستوى 20",140],
+["حزمة مستوى 25",140],
+["حزمة مستوى 30",160]
+],
+
+pubg:[
+["60 شدة",140],
+["325 شدة",700],
+["660 شدة",1300],
+["1800 شدة",3200],
+["حزمة شراء أول",140],
+["حزمة ترقية الأسلحة النارية",400],
+["حزمة إشعار الخرافي",650],
+["Prime شهر 1",140],
+["Prime شهر 3",400],
+["Prime شهر 6",780],
+["Prime شهر 12",1300],
+["حزمة صفقات أسبوعية",140],
+["حزمة صفقات أسبوعية 2",400]
+]
+
+};
+
+function renderProducts(game,id){
+
+const box=document.getElementById(id);
+
+box.innerHTML="";
+
+products[game].forEach(function(item,index){
+
+const div=document.createElement("div");
+
+div.className="product";
+
+div.innerHTML=
+"<h3>"+item[0]+"</h3>"+
+"<div class='price'>"+item[1]+" ل.س</div>"+
+"<button class='buy' onclick=\"buy('"+game+"',"+index+")\">شراء</button>";
+
+box.appendChild(div);
+
+});
+
 }
-async function showStore(){login.classList.add("hidden");store.classList.remove("hidden")}
-async function redeemGift(){
- const code=giftCode.value.trim();
- if(!code)return msg("giftMsg","يرجى كتابة الكود","error");
- if(code===ADMIN_ACCESS_CODE){
-   adminGate.classList.remove("hidden");giftMsg.className="msg";giftMsg.style.display="none";
-   adminPass.focus();return;
- }
- /* كود العميل سيتم التحقق منه لاحقًا عبر RPC آمن في Supabase */
- msg("giftMsg","سيتم التحقق من كود الهدايا من قاعدة البيانات.","success");
+
+function showGame(game){
+
+document.getElementById("freefire").classList.remove("active");
+document.getElementById("pubg").classList.remove("active");
+
+document.getElementById("ffTab").classList.remove("active");
+document.getElementById("pubgTab").classList.remove("active");
+
+if(game==="freefire"){
+
+document.getElementById("freefire").classList.add("active");
+document.getElementById("ffTab").classList.add("active");
+
+}else{
+
+document.getElementById("pubg").classList.add("active");
+document.getElementById("pubgTab").classList.add("active");
+
 }
-async function adminLogin(){
- const password=adminPass.value;
- if(!password)return msg("adminMsg","اكتب كلمة المرور","error");
 
- /*
-  * يجب أن يكون حساب الإدارة موجودًا في Supabase Auth.
-  * استخدم بريد Admin الحقيقي في لوحة Supabase، ولا تضع كلمة المرور في هذا الملف.
-  * هنا نستخدم البريد الإداري كحساب Auth بعد اجتياز بوابة الكود.
-  */
- const ADMIN_EMAIL="freefiregar170@gmail.com";
- const {data,error}=await sb.auth.signInWithPassword({email:ADMIN_EMAIL,password});
- if(error)return msg("adminMsg","كلمة المرور غير صحيحة أو حساب الإدارة غير مفعّل","error");
- const {data:sessionData}=await sb.auth.getSession();
- if(!sessionData.session)return msg("adminMsg","تعذر إنشاء جلسة آمنة","error");
-
- /* لا نعتمد على الواجهة وحدها: RLS يجب أن يمنع أي مستخدم عادي من بيانات الإدارة. */
- adminGate.classList.add("hidden");store.classList.add("hidden");admin.classList.remove("hidden");
 }
-async function adminLogout(){await sb.auth.signOut();admin.classList.add("hidden");store.classList.remove("hidden")}
-function section(id,b){["gift","ff","bal"].forEach(x=>document.getElementById(x).classList.add("hidden"));document.getElementById(id).classList.remove("hidden");document.querySelectorAll(".tabs .tab").forEach(x=>x.classList.remove("active"));b.classList.add("active")}
-function ff(id,b){["members","diamonds"].forEach(x=>document.getElementById(x).classList.add("hidden"));document.getElementById(id).classList.remove("hidden");b.parentElement.querySelectorAll("button").forEach(x=>x.classList.remove("active"));b.classList.add("active")}
-function balTab(id,b){["mtn","syria"].forEach(x=>document.getElementById(x).classList.add("hidden"));document.getElementById(id).classList.remove("hidden");b.parentElement.querySelectorAll("button").forEach(x=>x.classList.remove("active"));b.classList.add("active")}
-function balanceOrder(rate){let q=Number(document.getElementById(rate===12?"mqa":"sqa").value);if(!q||q<10||q%10)return msg("balMsg","الكمية يجب أن تكون من مضاعفات 10","error");msg("balMsg","السعر: "+(q/10*rate)+" — سيتم إنشاء الطلب عبر قاعدة البيانات بعد ربطه.","success")}
 
-const members=[["عضوية شهرية",1600],["عضوية أسبوعية",350],["عضوية أسبوعية دبل",650],["حزمة مستوى 6",100],["حزمة مستوى 10",140],["حزمة مستوى 15",140],["حزمة مستوى 20",140],["حزمة مستوى 25",140],["حزمة مستوى 30",160]];
-const diamonds=[["100 جوهرة",140],["200 جواهر",280],["500 جواهر",700],["1060 جواهر",1400],["2180 جواهر",2700]];
-mp.innerHTML=members.map(x=>`<button class="product"><b>${x[0]}</b><span>${x[1]}</span></button>`).join("");
-dp.innerHTML=diamonds.map(x=>`<button class="product"><b>${x[0]}</b><span>${x[1]}</span></button>`).join("");
+function buy(game,index){
 
-(async()=>{const {data}=await sb.auth.getSession();if(data.session){showStore()}})();
+const player=document.getElementById("playerId").value.trim();
+const server=document.getElementById("server").value.trim();
+
+if(!player){
+alert("يرجى إدخال معرف اللاعب.");
+return;
+}
+
+if(!server){
+alert("يرجى إدخال السيرفر.");
+return;
+}
+
+const product=products[game][index];
+
+alert(
+"المنتج: "+product[0]+
+"\nالسعر: "+product[1]+" ل.س"+
+"\nID اللاعب: "+player+
+"\nالسيرفر: "+server
+);
+
+}
+
+renderProducts("freefire","freefireProducts");
+renderProducts("pubg","pubgProducts");
+
 </script>
-</body></html>
-   
+
+</body>
+</html>
